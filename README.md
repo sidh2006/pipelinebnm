@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 title: Broken Pipeline Env
 emoji: 🔧
@@ -133,3 +134,6 @@ python inference.py --task 2 --seed 42
 
 Space: https://nidhishmg10-broken-pipeline-env.hf.space
 Docs: https://nidhishmg10-broken-pipeline-env.hf.space/docs
+=======
+# pipelinebnm
+>>>>>>> 8871b255e1d0b230f24337d9b4bc2596437ca8b4
