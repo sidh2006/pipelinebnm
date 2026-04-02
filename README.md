@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ---
 title: Broken Pipeline Env
 emoji: 🔧
