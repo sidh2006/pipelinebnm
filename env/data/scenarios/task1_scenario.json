@@ -1,0 +1,44 @@
+[
+  {
+    "bug_id": "B001",
+    "type": "null_injection",
+    "column": "salary",
+    "rows": [23, 47, 89],
+    "severity": "high",
+    "description": "NULL values injected in salary column"
+  },
+  {
+    "bug_id": "B002",
+    "type": "type_corruption",
+    "column": "age",
+    "row": 5,
+    "value": "twenty-three",
+    "severity": "high",
+    "description": "Age stored as string instead of integer at row 5"
+  },
+  {
+    "bug_id": "B003",
+    "type": "out_of_range",
+    "column": "age",
+    "row": 67,
+    "value": 999,
+    "severity": "medium",
+    "description": "Age value 999 is outside valid range 22-65"
+  },
+  {
+    "bug_id": "B004",
+    "type": "format_inconsistency",
+    "column": "phone",
+    "row": 10,
+    "severity": "low",
+    "description": "Phone reformatted to +91-98-XXXXXXXX instead of 98XXXXXXXX"
+  },
+  {
+    "bug_id": "B005",
+    "type": "duplicate_rows",
+    "column": null,
+    "indices": [34, 35],
+    "severity": "medium",
+    "description": "Rows 34 and 35 duplicated"
+  }
+]

@@ -1,0 +1,45 @@
+{
+  "bugs": [
+    {
+      "bug_id": "B001",
+      "type": "schema_drift",
+      "old_col": "phone",
+      "new_col": "contact_number",
+      "severity": "critical",
+      "description": "phone renamed to contact_number upstream"
+    },
+    {
+      "bug_id": "B002",
+      "type": "schema_drift",
+      "old_col": "hire_date",
+      "new_col": "start_date",
+      "type_change": {
+        "from": "object",
+        "to": "date"
+      },
+      "severity": "critical",
+      "description": "hire_date renamed to start_date with type change"
+    },
+    {
+      "bug_id": "B003",
+      "type": "null_injection",
+      "column": "consent_flag",
+      "rows": "ALL",
+      "severity": "critical",
+      "description": "consent_flag column dropped by upstream — all values null"
+    }
+  ],
+  "column_dependencies": {
+    "salary": [
+      "salary_ratio",
+      "tax_band"
+    ],
+    "phone": [
+      "contact_directory",
+      "sms_alerts"
+    ],
+    "hire_date": [
+      "tenure_years"
+    ]
+  }
+}

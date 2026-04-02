@@ -1,0 +1,31 @@
+name: "DataPipelineEnv"
+version: "1.0.0"
+description: >
+  Standardized environment simulating a broken enterprise data pipeline.
+  An LLM agent acts as an on-call data engineer — inspecting, fixing,
+  and validating datasets before a production ETL job runs.
+
+tasks:
+  - id: 1
+    name: "Data Quality Audit"
+    difficulty: "easy"
+    max_steps: 10
+  - id: 2
+    name: "Schema Drift Remediation"
+    difficulty: "medium"
+    max_steps: 15
+  - id: 3
+    name: "Full Data Incident Response"
+    difficulty: "hard"
+    max_steps: 20
+
+action_space:
+  type: "structured_json"
+  model: "DataAction"
+
+observation_space:
+  type: "structured_json"
+  model: "DataObservation"
+
+reward_range: [-0.5, 1.0]
+grader_output_range: [0.0, 1.0]

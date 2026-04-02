@@ -1,0 +1,57 @@
+{
+  "bugs": [
+    {
+      "bug_id": "B001",
+      "type": "schema_drift",
+      "stage": "stage_3_join",
+      "old_col": "salary",
+      "new_col": "rev_amt",
+      "severity": "critical",
+      "description": "revenue_amount renamed to rev_amt at join stage causing missing column errors"
+    },
+    {
+      "bug_id": "B002",
+      "type": "type_corruption",
+      "stage": "stage_3_join",
+      "column": "rev_amt",
+      "row": 0,
+      "value": "1234.56",
+      "severity": "critical",
+      "description": "rev_amt cast to string causing aggregation to silently produce NaN values"
+    },
+    {
+      "bug_id": "B003",
+      "type": "pii_leak",
+      "stage": "stage_3_join",
+      "column": "ssn",
+      "severity": "critical",
+      "description": "SSN column leaked into downstream analytics output — GDPR violation risk"
+    },
+    {
+      "bug_id": "B004",
+      "type": "duplicate_rows",
+      "stage": "stage_4_aggregate",
+      "severity": "high",
+      "description": "Aggregation layer producing 3 duplicate rows inflating revenue totals by 28%",
+      "indices": [20, 21, 22]
+    }
+  ],
+  "pipeline_stages": [
+    "stage_1_ingest",
+    "stage_2_clean",
+    "stage_3_join",
+    "stage_4_aggregate",
+    "stage_5_output"
+  ],
+  "corruption_entry_stage": "stage_3_join",
+  "correct_diagnosis_keywords": [
+    "stage 3",
+    "join stage",
+    "schema drift",
+    "SSN", "PII", "GDPR",
+    "type mismatch",
+    "revenue",
+    "aggregation",
+    "NaN"
+  ]
+}

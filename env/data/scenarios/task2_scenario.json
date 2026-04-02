@@ -1,0 +1,45 @@
+{
+  "bugs": [
+    {
+      "bug_id": "B001",
+      "type": "schema_drift",
+      "old_col": "employee_id",
+      "new_col": "customer_uuid",
+      "severity": "critical",
+      "description": "employee_id renamed to customer_uuid upstream"
+    },
+    {
+      "bug_id": "B002",
+      "type": "schema_drift",
+      "old_col": "hire_date",
+      "new_col": "dob_date",
+      "type_change": {
+        "from": "object",
+        "to": "date"
+      },
+      "severity": "critical",
+      "description": "hire_date renamed to dob_date with type change"
+    },
+    {
+      "bug_id": "B003",
+      "type": "null_injection",
+      "column": "consent_flag",
+      "rows": "ALL",
+      "severity": "critical",
+      "description": "consent_flag column missing entirely from upstream — all values null"
+    }
+  ],
+  "column_dependencies": {
+    "salary": [
+      "salary_ratio",
+      "tax_band"
+    ],
+    "employee_id": [
+      "dept_head_flag",
+      "salary_ratio"
+    ],
+    "hire_date": [
+      "tenure_years"
+    ]
+  }
+}
