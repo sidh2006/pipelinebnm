@@ -96,6 +96,19 @@ _SSN_RE = re.compile(r"\b\d{3}-\d{2}-\d{4}\b")
 _EMAIL_RE = re.compile(r"[\w.+-]+@[\w-]+\.[a-zA-Z]{2,}")
 
 
+# -- Structured output for validator --------------------------------------
+def print_start(task_name: str):
+    print(f"[START] task={task_name}", flush=True)
+
+
+def print_step(step_num: int, reward: float, action_type: str):
+    print(f"[STEP] step={step_num} reward={round(reward, 4)} action={action_type}", flush=True)
+
+
+def print_end(task_name: str, score: float, steps: int):
+    print(f"[END] task={task_name} score={round(score, 4)} steps={steps}", flush=True)
+
+
 # -- Belief state ----------------------------------------------------------
 @dataclass
 class BeliefState:
@@ -419,6 +432,15 @@ def _compaction_summary(belief_state: dict, step_errors: list[str], max_steps: i
 def run_episode(task_id: int, config: dict[str, str], client: OpenAI, seed: int | None = None) -> float:
     _check_runtime()
 
+    TASK_NAMES = {
+        1: "DataQualityAudit",
+        2: "SchemaDriftRemediation",
+        3: "FullIncidentResponse",
+    }
+    task_name = TASK_NAMES.get(task_id, f"Task{task_id}")
+
+    print_start(task_name)
+
     params = {"task_id": task_id}
     if seed is not None:
         params["seed"] = seed
@@ -525,6 +547,7 @@ def run_episode(task_id: int, config: dict[str, str], client: OpenAI, seed: int 
         obs = result.get("observation", obs)
         done = result.get("done", False)
         reward = float(result.get("reward", 0.0))
+        print_step(step_num + 1, reward, action.get("action_type", "NOOP"))
         info = result.get("info", {})
         obs["visible_signals"] = info.get("visible_signals", {})
 
@@ -571,6 +594,8 @@ def run_episode(task_id: int, config: dict[str, str], client: OpenAI, seed: int 
     print(f"    confirmed   = {belief.confirmed_fixes}")
     print(f"    confidence  = {belief.confidence:.2f}")
     print(f"    signals     = {belief.signals_unlocked}")
+
+    print_end(task_name, score, step_num + 1)
 
     return score
 
