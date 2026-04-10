@@ -19,6 +19,7 @@ from env.models import (
     ActionType,
     AlertSignal,
     ComplianceFacet,
+    DagOverview,
     DataAction,
     DataObservation,
     DetectedIssue,
