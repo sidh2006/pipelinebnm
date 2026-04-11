@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from env.models import DetectedIssue
+from env.models import DetectedIssue, LogsFacet, MetricsFacet
 
 
 # Canonical matching function — used by ALL graders
@@ -360,10 +360,8 @@ def get_failure_signature(bug_spec: list[dict]):
     )
 
 
-def build_metrics_facet(df, historical_avg: int = 200) -> "MetricsFacet":
+def build_metrics_facet(df, historical_avg: int = 200) -> MetricsFacet:
     """Build MetricsFacet from current DataFrame state."""
-    from env.models import MetricsFacet
-
     null_ratio = float(df.isnull().sum().sum() / max(df.size, 1))
     return MetricsFacet(
         row_count=len(df),
@@ -373,10 +371,8 @@ def build_metrics_facet(df, historical_avg: int = 200) -> "MetricsFacet":
     )
 
 
-def build_logs_facet(error_list: list[str], status: str = "failed") -> "LogsFacet":
+def build_logs_facet(error_list: list[str], status: str = "failed") -> LogsFacet:
     """Build LogsFacet from accumulated error messages."""
-    from env.models import LogsFacet
-
     return LogsFacet(
         recent_errors=error_list[-5:],
         last_run_status=status,
